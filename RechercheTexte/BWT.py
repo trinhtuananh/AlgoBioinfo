@@ -63,6 +63,7 @@ def Recherche(texte,motif):
     AffichageColonne(LFMap)
     actuel=motif[len(motif)-1]
     suivant=motif[len(motif)-2]
+    print actuel
     
     F=[]
     L=[]
@@ -76,36 +77,42 @@ def Recherche(texte,motif):
     ensemble=[]
 
     for j in range(len(L)):
- 
-        if (actuel == F[j][0])  and (suivant == L[j][0]):
+        if len(motif)<2 and actuel == F[j][0]:
+            ensemble.append(F[j])
+        elif (actuel == F[j][0])  and (suivant == L[j][0]):
             ensemble.append(L[j])
+    print ensemble
+    motif=motif[0:len(motif)-1]
+    print motif
     for i in reversed(range(len(motif))):
- 
- 
-
-                
-
 
         if len(ensemble)!=0:
             actuel=suivant
-            suivant=motif[i]
-
+            suivant=motif[i-1]
+            print actuel+"actuel"
+            print suivant +"suivant"
             junior=[]
             for k in range(len(ensemble)):
-
-                if (suivant == L[F.index(ensemble[k])][0]) and actuel== F[k]:
+                print k
+                print ensemble
+                print L[F.index(ensemble[k])][0]
+                print F[k][0]
+                if suivant == L[F.index(ensemble[k])][0] and actuel== F[F.index(ensemble[k])][0]:
+                    
                     junior.append(L[F.index(ensemble[k])])
+                    print junior
    
 
             if len(junior)>0:
                 ensemble=junior
 
-    
+        print i 
     for l in range(len(ensemble)):
+        print "Resultat"
         print SA[F.index(ensemble[l])]  
     
              
 def AffichageColonne(container):
     for i in range(len(container)):
         print container[i]
-Recherche("couaccou","cou")
+Recherche("couaccou","c")

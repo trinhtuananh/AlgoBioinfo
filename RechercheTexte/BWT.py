@@ -77,27 +77,27 @@ def Recherche(texte,motif):
     ensemble=[]
 
     for j in range(len(L)):
-        if len(motif)<2 and actuel == F[j][0]:
+        if len(motif)<2 and actuel == L[j][0]:
             ensemble.append(F[j])
+            #motif=motif[0:len(motif)-1]
         elif (actuel == F[j][0])  and (suivant == L[j][0]):
             ensemble.append(L[j])
     print ensemble
-    motif=motif[0:len(motif)-1]
+    #motif=motif[0:len(motif)-1]
+
     print motif
     for i in reversed(range(len(motif))):
 
         if len(ensemble)!=0:
-            actuel=suivant
-            suivant=motif[i-1]
+            actuel=motif[i]
             print actuel+"actuel"
-            print suivant +"suivant"
             junior=[]
             for k in range(len(ensemble)):
                 print k
                 print ensemble
-                print L[F.index(ensemble[k])][0]
+                print L[F.index(ensemble[k])]
                 print F[k][0]
-                if suivant == L[F.index(ensemble[k])][0] and actuel== F[F.index(ensemble[k])][0]:
+                if actuel== L[F.index(ensemble[k])][0]:
                     
                     junior.append(L[F.index(ensemble[k])])
                     print junior
@@ -115,4 +115,4 @@ def Recherche(texte,motif):
 def AffichageColonne(container):
     for i in range(len(container)):
         print container[i]
-Recherche("couaccou","c")
+Recherche("couaccou","cou")

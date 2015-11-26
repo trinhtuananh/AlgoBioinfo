@@ -6,7 +6,7 @@ def naif(motif,texte):
 	for i in range (len(texte)):
 		if (motif==texte[i:len(motif)+i]):
 			reponse.append(i)
-	
+	print reponse
 
 
 def RK(motif,texte):
@@ -53,31 +53,41 @@ def conversion(texte):
 		resultat=resultat+texteConverti[i]
 	return resultat
 
+
 def KMP(motif,texte):
+	motif=motif
 	pi=fonctionPrefixe(motif)
 	q=0
+	rep=0
 	for i in range (len(texte)):
-		while (q>0 and motif[q+1]!=texte[i]):
-			q=pi[q]
+
+		while (q>0 and motif[q]!=texte[i]):
+			q=pi[q-1]
+
 		if motif[q]==texte[i]:
 			q=q+1
 		if q==len(motif):
+			rep = rep+1
 			print ("Le motif apparait en position", i-len(motif)+1)
+			print rep
 			q=pi[q-1]
-
+			print q
+	print rep/len(motif)
 def fonctionPrefixe(motif):
 	pi=[]
 	for i in range (len(motif)):
 		pi.append(0)
 
 	k=0
-	for i in range (2,len(motif)):
-		while (k>0 and motif[k+1]!=motif[q]):
+	for i in range (1,len(motif)):
+		while (k>0 and motif[k]!=motif[i]):
 			k=pi[k]
-		if (motif[k+1]==motif[q]):
+		if (motif[k]==motif[i]):
 			k=k+1
-		pi[q]=k
-
+		pi[i]=k
+	print pi
 	return pi
+f = open("human_seq.fa","r").read()
 
-KMP ("a","atca");
+fonctionPrefixe("ababababca")
+KMP ("TTTT",f);

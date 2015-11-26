@@ -90,4 +90,4 @@ def fonctionPrefixe(motif):
 f = open("human_seq.fa","r").read()
 
 fonctionPrefixe("ababababca")
-KMP ("TTTT",f);
+KMP ("GAATT",f);

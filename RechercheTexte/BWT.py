@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# coding: utf-8
 def creationMatrice(texte):
     container=[]
     for i in range (len(texte)+1):
@@ -60,6 +62,7 @@ def FMindex(texte):
 
     return LFMap
 
+
 def Recherche(texte,motif):
     LFMap=FMindex(texte)
     AffichageColonne(LFMap)
@@ -84,37 +87,47 @@ def Recherche(texte,motif):
             #motif=motif[0:len(motif)-1]
         elif (actuel == F[j][0])  and (suivant == L[j][0]):
             ensemble.append(L[j])
+    print "ensemble" 
     print ensemble
     #motif=motif[0:len(motif)-1]
-
+    print "motif"
     print motif
-    for i in reversed(range(len(motif))):
+    for i in reversed(range(len(motif)-2)):
 
         if len(ensemble)!=0:
             actuel=motif[i]
             print actuel+"actuel"
             junior=[]
             for k in range(len(ensemble)):
-                print k
+                #print k
                 print ensemble
-                print L[F.index(ensemble[k])]
-                print F[k][0]
+                #print L[F.index(ensemble[k])]
+                #print F[k][0]
+                print L[F.index(ensemble[k])][0]
                 if actuel== L[F.index(ensemble[k])][0]:
                     
                     junior.append(L[F.index(ensemble[k])])
+                    print "junior"
                     print junior
+                else:
+                    print "ne passe pas"
+                    print L[F.index(ensemble[k])]
+                    
    
 
-            if len(junior)>0:
-                ensemble=junior
+        if len(junior)>0:
+            ensemble=junior
 
-        print i 
+        #print i 
     for l in range(len(ensemble)):
         print "Resultat"
-        print SA[F.index(ensemble[l])]  
+        print SA[F.index(ensemble[l])] 
+    print len(ensemble) 
     
              
 def AffichageColonne(container):
     for i in range(len(container)):
         print container[i]
-Recherche("couaccou","cou")
+        
+f= open("human_seq.fa","r").read()
+Recherche(f,"TGATGG")

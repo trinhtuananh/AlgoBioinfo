@@ -10,9 +10,11 @@ def creationMatrice(texte):
     
         
 def decale(container):
+    #Décale les motifs
     for i in range (len(container)):
         ligne_tmp=container[i][len(container[i])-i:]+container[i][:len(container[i])-i]
         container[i]=ligne_tmp
+
 
 
 def SuffixArray(container):

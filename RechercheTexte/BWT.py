@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
+import time
+import numpy
 def creationMatrice(texte):
-    container=[]
-    for i in range (len(texte)+1):
-        container.append("$"+texte)
-    decale(container)
+    texte="$"+texte
+    container=[texte]*len(texte)
+    t=time.clock()
+    for i in range (len(texte)):
+        container[i]=container[i][len(container[i])-i:]+container[i][:len(container[i])-i]
     container.sort(cmp=None, key=None, reverse=False)
-    AffichageColonne(container)
-    SuffixArray(container)
+#     AffichageColonne(container)
+#     SuffixArray(container)
+    tt=time.clock()
     return container
     
-        
-def decale(container):
-    #Décale les motifs
-    for i in range (len(container)):
-        ligne_tmp=container[i][len(container[i])-i:]+container[i][:len(container[i])-i]
-        container[i]=ligne_tmp
+
 
 
 
@@ -25,7 +24,6 @@ def SuffixArray(container):
         ligne_tmp=container[i][:(container[i].index("$")+1)]
         l.append(ligne_tmp)
 
-    AffichageColonne(l)
 
 def creationLFMap(texte):
     
@@ -39,11 +37,38 @@ def creationLFMap(texte):
         ligne_tmp.append(i)
         LFMap.append(ligne_tmp)
         
-    AffichageColonne(LFMap) 
     
     
 def FMindex(texte):
-    
+
+    container=creationMatrice(texte)
+
+
+    dicopremier={}
+    dicodeuxieme={}
+    t=time.clock()
+
+    for i in range(len(container)):
+        ligne_tmp=[container[i][0],container[i][len(container[i])-1]]
+        if ligne_tmp[0]  in dicopremier:
+            dicopremier[ligne_tmp[0]]=dicopremier[ligne_tmp[0]] +1
+        else:
+            dicopremier[ligne_tmp[0]]=0
+        if ligne_tmp[1]  in dicodeuxieme:
+            dicodeuxieme[ligne_tmp[1]]=dicodeuxieme[ligne_tmp[1]] +1
+        else:
+            dicodeuxieme[ligne_tmp[1]]=0
+        ligne_tmp[0]=ligne_tmp[0]+str(dicopremier[ligne_tmp[0]])#.insert(1, premier)
+        ligne_tmp[1]=ligne_tmp[1]+str(dicodeuxieme[ligne_tmp[1]])#append(deuxieme)
+        ligne_tmp.append(len(container)-container[i].index("$")-1)
+        container[i]=(ligne_tmp)
+    tt=time.clock()
+
+    print tt-t
+    return container
+
+def FMindex2(texte):
+    t=time.clock()
     container=creationMatrice(texte)
     LFMap=[]
     for i in range(len(container)):
@@ -59,59 +84,59 @@ def FMindex(texte):
 
         LFMap.append(ligne_tmp)
         
-
+    tt=time.clock()
+    print tt-t
     return LFMap
-
-
 def Recherche(texte,motif):
     LFMap=FMindex(texte)
-    AffichageColonne(LFMap)
+#     AffichageColonne(LFMap)
     actuel=motif[len(motif)-1]
     suivant=motif[len(motif)-2]
-    print actuel
     
     F=[]
     L=[]
     SA=[]
-    
-    for i in range (len(LFMap)):
-        F.append(LFMap[i][0])
-        L.append(LFMap[i][1])
+    t=time.clock()
 
-        SA.append(LFMap[i][2])
+
     ensemble=[]
+#     F=[LFMap for i in range (len(LFMap))][0]
 
-    for j in range(len(L)):
+    for j in range(len(LFMap)):
+        F.append(LFMap[j][0])
+        L.append(LFMap[j][1])
+
+        SA.append(LFMap[j][2])
         if len(motif)<2 and actuel == L[j][0]:
             ensemble.append(F[j])
             #motif=motif[0:len(motif)-1]
         elif (actuel == F[j][0])  and (suivant == L[j][0]):
             ensemble.append(L[j])
-    print "ensemble" 
-    print ensemble
-    #motif=motif[0:len(motif)-1]
-    print "motif"
-    print motif
+            
+    if len(motif)<2 and actuel in L[:][0]:
+        p=L[:][0]
+#     print "ensemble" 
+#     print ensemble
+#     #motif=motif[0:len(motif)-1]
+#     print "motif"
+#     print motif
+
     for i in reversed(range(len(motif)-2)):
 
         if len(ensemble)!=0:
             actuel=motif[i]
-            print actuel+"actuel"
+#             print actuel+"actuel"
             junior=[]
             for k in range(len(ensemble)):
                 #print k
-                print ensemble
-                #print L[F.index(ensemble[k])]
-                #print F[k][0]
-                print L[F.index(ensemble[k])][0]
+#                 print ensemble
+#                 #print L[F.index(ensemble[k])]
+#                 #print F[k][0]
+#                 print L[F.index(ensemble[k])][0]
                 if actuel== L[F.index(ensemble[k])][0]:
                     
                     junior.append(L[F.index(ensemble[k])])
-                    print "junior"
-                    print junior
-                else:
-                    print "ne passe pas"
-                    print L[F.index(ensemble[k])]
+
                     
    
 
@@ -119,15 +144,19 @@ def Recherche(texte,motif):
             ensemble=junior
 
         #print i 
+    tt=time.clock()
+
+    print tt-t
     for l in range(len(ensemble)):
         print "Resultat"
         print SA[F.index(ensemble[l])] 
     print len(ensemble) 
     
              
-def AffichageColonne(container):
-    for i in range(len(container)):
-        print container[i]
+
         
 f= open("human_seq.fa","r").read()
-Recherche(f,"TGATGG")
+t1=time.clock()
+Recherche(f,"TTTT")
+t2=time.clock()
+print t2-t1

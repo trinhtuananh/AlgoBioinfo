@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
+import cProfile
+import re
 import time
 import numpy
 def creationMatrice(texte):
@@ -157,6 +159,7 @@ def Recherche(texte,motif):
         
 f= open("human_seq.fa","r").read()
 t1=time.clock()
-Recherche(f,"TTTT")
+# Recherche(f,"TTTT")
 t2=time.clock()
 print t2-t1
+cProfile.run('Recherche(f,"TTTT")')

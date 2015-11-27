@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import time
+import cProfile
+import re
 def naif(motif,texte):
 	reponse=[]
 	for i in range (len(texte)):
@@ -69,10 +71,8 @@ def KMP(motif,texte):
 		if q==len(motif):
 			rep = rep+1
 			print ("Le motif apparait en position", i-len(motif)+1)
-			print rep
 			q=pi[q-1]
-			print q
-	print rep/len(motif)
+	print rep
 def fonctionPrefixe(motif):
 	pi=[]
 	for i in range (len(motif)):
@@ -85,9 +85,10 @@ def fonctionPrefixe(motif):
 		if (motif[k]==motif[i]):
 			k=k+1
 		pi[i]=k
-	print pi
 	return pi
 f = open("human_seq.fa","r").read()
+t1=time.clock()
+cProfile.run('KMP ("TTTT",f)');
+t2=time.clock()
 
-fonctionPrefixe("ababababca")
-KMP ("GAATT",f);
+print t2-t1
